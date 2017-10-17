@@ -12,7 +12,8 @@ class CitiesController < ApplicationController
   def show
     city_name = @city.name
     country_code = @city.country_code
-    response = HTTParty.get('http://api.openweathermap.org/data/2.5/weather?q=#{city_name},#{country_code}&appid=6b7691d7c9453c238ec6a2863c1e5699')
+    api_key = ENV.fetch('OPEN_WEATHER_MAP_API_KEY')
+    response = HTTParty.get('http://api.openweathermap.org/data/2.5/weather?q=#{city_name},#{country_code}&appid=#{api_key}')
     @data = response.body
     @temp_min = response['main']['temp_min'] - 273.15
     @temp_max = response['main']['temp_max'] - 273.15
